@@ -14,12 +14,32 @@ export class AppComponent implements OnInit {
   constructor() {} 
 
   ngOnInit(){
+    //set formgroups, formcontrols, and formarrays
     this.signupForm = new FormGroup({
-
+      'usernameData': new FormGroup({
+        'username' : new FormControl(null),
+        'email': new FormControl(null)
+      }),
+      'gender': new FormControl(null),
+      'hobbies': new FormArray([])
     })
+
+    //subscribe to value changes
+
+    //subscribe to statusChanges
+
+    //setValue
+
+    //patchValue
   }
 
   onSubmit(){
     console.log();
   }
+
+  //onAddHobby - button will add additional form fields
+
+  //forbiddenNames - custom validation
+
+  //async validation by returning promise or observable. field will go to a ng-pending stage
 }
