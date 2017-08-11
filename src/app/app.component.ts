@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   ngOnInit(){
     //set formgroups, formcontrols, and formarrays
     this.signupForm = new FormGroup({
-      'usernameData': new FormGroup({
+      'userData': new FormGroup({
         'username' : new FormControl(null),
         'email': new FormControl(null)
       }),
@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log();
+    console.log(this.signupForm);
   }
 
   //onAddHobby - button will add additional form fields
