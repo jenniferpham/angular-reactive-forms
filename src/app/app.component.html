@@ -2,15 +2,29 @@
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="alert alert-danger" *ngIf="!signupForm.valid && signupForm.touched">
+          <p>Please fill out all required fields</p>
+        </div>
         <div formGroupName="userData">
           <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" class="form-control" formControlName="username">
+            <label for="username">Username</label>
+            <input type="text" id="username" class="form-control" formControlName="username">
+             <p *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched" class="text-alert">
+                <span *ngIf="signupForm.get('userData.username').errors['required']" class="text-alert">This field is required</span>   
+                <span *ngIf="signupForm.get('userData.username').errors['nameIsForbidden']" class="text-alert">This username is already taken</span> 
+             </p>
           </div>
+
           <div class="form-group">
             <label for="email">email</label>
-            <input type="text" id="email" class="form-control" formControlName="email">
+            <input type="text" id="email" class="form-control" formControlName="email"/>
+            <div *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched">
+              <span *ngIf="signupForm.get('userData.email').errors['required']" class="text-alert">Please fill out a field here</span>
+              <span *ngIf="signupForm.get('userData.email').errors['email']" class="text-alert">Please enter a valid email</span>
+              <span *ngIf="signupForm.get('userData.email').errors['emailIsForbidden']">This email is not a good one. Don't use test@test.com</span>
+            </div>
           </div>
+
         </div>
         
         <div class="radio" *ngFor="let gender of genders">
@@ -20,8 +34,19 @@
               [value]="gender"
               formControlName="gender">{{ gender }}
           </label>
+          <p *ngIf="!signupForm.get('gender').valid">
+            <span class="text-alert" *ngIf="signupForm.get('gender').errors['required']">This is required</span>
+          </p>
+        </div>
+        <button class="btn btn-default" (click)="onAddHobby()">Add Hobbies</button>
+        <div formArrayName="hobbies">
+          <div class="form-group" *ngFor="let hobbyControl of signupForm.get('hobbies').controls; let i=index">
+            <input type="text" class="form-control" [formControlName]="i">
+          </div>
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
+        <button class="btn btn-default" (click)="setValue()">Set Value</button>
+        <button class="btn btn-default" (click)="patchValue()">Patch Value</button>
       </form>
     </div>
   </div>
